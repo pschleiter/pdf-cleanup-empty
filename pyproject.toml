@@ -1,12 +1,13 @@
 [build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "pdf_cleanup_empty"
 authors = [{ name = "Patrick Schleiter", email = "git.pschleiter@gmail.com" }]
 description = "This package can be used to remove white/empty pages from a pdf."
-requires-python = ">=3.8"
+readme = "README.md"
+requires-python = ">=3.12"
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -14,22 +15,22 @@ classifiers = [
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
 ]
-dependencies = ["pikepdf", "numpy", "click"]
-dynamic = ["version", "readme"]
+dependencies = [
+    "click>=8.1.8",
+    "numpy>=2.2.4",
+    "pikepdf>=9.5.2",
+]
+dynamic = ["version"]
 
 [project.urls]
 "Source Code" = "https://github.com/pschleiter/pdf_cleanup_empty"
 
-[tool.setuptools.packages.find]
-where = ["src"]
-
-[tool.setuptools.dynamic]
-version = { attr = "pdf_cleanup_empty.__version__" }
-readme = { file = ["README.md"], content-type = "text/markdown" }
-
 [project.scripts]
 cleanup = "pdf_cleanup_empty.cli:remove_empty_pages"
+
+[tool.hatch.version]
+path = "src/pdf_cleanup_empty/__init__.py"
