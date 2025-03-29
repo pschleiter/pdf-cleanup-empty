@@ -30,12 +30,19 @@ def _calculate_black_percentage(image):
     "output_path",
     type=click.Path(exists=True, path_type=Path),
     default=".",
-    help="Provide a target path where the newly create files will be saved."
+    help="Provide a target path where the newly create files will be saved.",
 )
-@click.option("-v", "--verbose", "verbose", is_flag=True, default=False, help="Show some details while processing the documents.")
+@click.option(
+    "-v",
+    "--verbose",
+    "verbose",
+    is_flag=True,
+    default=False,
+    help="Show some details while processing the documents.",
+)
 def remove_empty_pages(input_path: typing.List[Path], output_path: Path, verbose: bool):
     """
-        Removes empty and blank pages from the provided pdf files and saves them with the suffix _clean.
+    Removes empty and blank pages from the provided pdf files and saves them with the suffix _clean.
     """
     for input_file in input_path:
         if input_file.suffix.lower() != ".pdf":
@@ -56,7 +63,9 @@ def remove_empty_pages(input_path: typing.List[Path], output_path: Path, verbose
 
                     if not page.images:
                         if verbose:
-                            click.echo(" "*9 + f"| Skip, since it's empty.  |", nl=False)
+                            click.echo(
+                                " " * 9 + "| Skip, since it's empty.  |", nl=False
+                            )
                         continue
 
                     black_percentage = 0.0
@@ -73,10 +82,10 @@ def remove_empty_pages(input_path: typing.List[Path], output_path: Path, verbose
                     if black_percentage > 0.1:
                         output_pdf.pages.append(page)
                         if verbose:
-                            click.echo(f" Keep                      |", nl=False)
+                            click.echo(" Keep                      |", nl=False)
 
                     elif verbose:
-                        click.echo(f" Skip, since white page.   |", nl=False)
+                        click.echo(" Skip, since white page.   |", nl=False)
 
                     if verbose:
                         click.echo(nl=True)
